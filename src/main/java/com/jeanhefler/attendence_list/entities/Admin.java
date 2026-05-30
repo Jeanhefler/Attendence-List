@@ -1,0 +1,13 @@
+package com.jeanhefler.attendence_list.entities;
+
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "admins")
+@AttributeOverride(name = "id", column = @Column(name = "admin_id"))
+public class Admin extends StakeHolder{
+    
+}
