@@ -22,7 +22,7 @@ public class AttendenceList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "attendencelist_id")
     private Long id;
-    private Date date;
+    private Date Attendancedate;
 
     @ManyToOne
     @JoinColumn(name = "classroom_id")
@@ -45,11 +45,11 @@ public class AttendenceList {
     public void setClassRoom(ClassRoom classRoom) {
         this.classRoom = classRoom;
     }
-    public Date getDate() {
-        return date;
+    public Date getAttendanceDate() {
+        return Attendancedate;
     }
-    public void setDate(Date date) {
-        this.date = date;
+    public void setAttendaceDate(Date date) {
+        this.Attendancedate = date;
     }
     public List<Attendence> getRecords() {
         return records;
