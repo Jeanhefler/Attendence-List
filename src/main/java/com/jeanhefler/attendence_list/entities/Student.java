@@ -24,8 +24,8 @@ public class Student {
     private boolean isEnrolled;
 
     @ManyToOne
-    @JoinColumn(name = "responsible_id")
-    private Responsible responsible;
+    @JoinColumn(name = "guardian_id")
+    private Guardian guardian;
 
     @ManyToOne
     @JoinColumn(name = "classroom_id")
@@ -58,12 +58,12 @@ public class Student {
         this.isEnrolled = isEnrolled;
     }
 
-    public Responsible getResponsible() {
-        return responsible;
+    public Guardian getGuardian() {
+        return guardian;
     }
 
-    public void setResponsible(Responsible responsible) {
-        this.responsible = responsible;
+    public void setGuardian(Guardian responsible) {
+        this.guardian = responsible;
     }
 
     public ClassRoom getClassRoom() {

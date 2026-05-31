@@ -9,5 +9,12 @@ import jakarta.persistence.Table;
 @Table(name = "admins")
 @AttributeOverride(name = "id", column = @Column(name = "admin_id"))
 public class Admin extends StakeHolder{
+
+    public Admin(Long id, String name, String phone, String address) {
+        super(id, name, phone, address);
+    }
+    public Admin(){
+
+    }
     
 }

@@ -10,9 +10,18 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "responsibles")
-@AttributeOverride(name = "id", column = @Column(name = "responsible_id"))
-public class Responsible extends StakeHolder{
-    @OneToMany(mappedBy = "responsible")
+@Table(name = "guardians")
+@AttributeOverride(name = "id", column = @Column(name = "guardian_id"))
+public class Guardian extends StakeHolder{
+
+    public Guardian(){
+
+    }
+    
+    public Guardian(Long id, String name, String phone, String address) {
+        super(id, name, phone, address);
+    }
+
+    @OneToMany(mappedBy = "guardian")
     private List<Student> students = new ArrayList<>();
 }

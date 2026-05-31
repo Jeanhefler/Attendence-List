@@ -3,9 +3,9 @@ package com.jeanhefler.attendence_list.respositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.jeanhefler.attendence_list.entities.Responsible;
+import com.jeanhefler.attendence_list.entities.Guardian;
 
 @Repository
-public interface ResponsibleRepository extends JpaRepository<Responsible, Long>{
+public interface GuardianRepository extends JpaRepository<Guardian, Long>{
 
 }

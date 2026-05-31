@@ -13,6 +13,10 @@ import jakarta.persistence.Table;
 @Table(name = "teachers")
 @AttributeOverride(name = "id", column = @Column(name = "teacher_id"))
 public class Teacher extends StakeHolder {
+    public Teacher(Long id, String name, String phone, String address) {
+        super(id, name, phone, address);
+    }
+
     @OneToMany(mappedBy = "teacher")
     private List<ClassRoom> classRooms = new ArrayList<>();
 }

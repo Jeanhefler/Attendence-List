@@ -14,6 +14,15 @@ public abstract class StakeHolder {
     private String phone;
     private String Address;
 
+    public StakeHolder(){
+
+    }
+    public StakeHolder(Long id, String name, String phone, String address) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        Address = address;
+    }
     public Long getId() {
         return id;
     }
