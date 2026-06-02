@@ -28,35 +28,30 @@ public class GuardianController {
     @GetMapping()
     public ResponseEntity<List<GuardianDto>> getGuardians(){
         List<GuardianDto> guardianDtos = this.guardianService.findGuardians().stream()
-        .map(guardian -> new GuardianDto(
-            guardian.getId(),
-            guardian.getName(),
-            guardian.getPhone(),
-            guardian.getAddress())).toList();
+        .map(guardian -> this.guardianService.toDto(guardian)).toList();
         return ResponseEntity.ok(guardianDtos);
     }
 
     @GetMapping("/{id}") 
     ResponseEntity<GuardianDto> getGuardianById(@PathVariable Long id){
         Guardian guardian = this.guardianService.findGuardianById(id);
-        GuardianDto dto = new GuardianDto(
-            guardian.getId(),
-            guardian.getName(),
-            guardian.getPhone(),
-            guardian.getAddress());
-        return ResponseEntity.ok(dto);
+        GuardianDto response = this.guardianService.toDto(guardian);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
-    ResponseEntity<Guardian> insert(@RequestBody GuardianDto guardianDto){
+    ResponseEntity<GuardianDto> insert(@RequestBody GuardianDto guardianDto){
         Guardian guardian = this.guardianService.createNewGuardian(guardianDto);
-        return ResponseEntity.ok().body(guardian);
+        GuardianDto response = this.guardianService.toDto(guardian);
+        return ResponseEntity.ok().body(response);
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<Guardian> updateGuardian(@RequestBody GuardianDto data, @PathVariable Long id){
-        Guardian guardian = this.guardianService.updateGuardian(data, id);
-        return ResponseEntity.ok().body(guardian);
+    ResponseEntity<GuardianDto> updateGuardian(@RequestBody GuardianDto data, @PathVariable Long id){
+        this.guardianService.updateGuardian(data, id);
+        Guardian guardian = this.guardianService.findGuardianById(id);
+        GuardianDto response = this.guardianService.toDto(guardian);
+        return ResponseEntity.ok().body(response);
     }
 
     @DeleteMapping("/{id}")

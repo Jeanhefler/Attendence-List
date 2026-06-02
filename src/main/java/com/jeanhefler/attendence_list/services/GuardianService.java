@@ -16,6 +16,16 @@ public class GuardianService {
         this.guardianRepository = guardianRepository;
     }
 
+    public GuardianDto toDto(Guardian guardian){
+        GuardianDto response = new GuardianDto(
+            guardian.getId(),
+            guardian.getName(),
+            guardian.getPhone(),
+            guardian.getAddress()
+        );
+        return response;
+    }
+
     public List<Guardian> findGuardians(){
         return this.guardianRepository.findAll();
     }
@@ -25,8 +35,8 @@ public class GuardianService {
         orElseThrow(() -> new RuntimeException("Guardian not Found"));
     }
 
-    public Guardian createNewGuardian(GuardianDto guardianDtod){
-        Guardian newGuardian = new Guardian(guardianDtod);
+    public Guardian createNewGuardian(GuardianDto guardianDto){
+        Guardian newGuardian = new Guardian(guardianDto);
         this.guardianRepository.save(newGuardian);
         return newGuardian;
     }
