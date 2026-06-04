@@ -16,7 +16,37 @@ public class GuardianService {
         this.guardianRepository = guardianRepository;
     }
 
-    public GuardianDto toDto(Guardian guardian){
+    public List<GuardianDto> findGuardians(){
+        List<GuardianDto> guardians = this.guardianRepository.findAll().stream().
+        map(guardian -> new GuardianDto(
+            guardian.getId(),
+            guardian.getName(),
+            guardian.getPhone(),
+            guardian.getAddress()
+        )).toList();
+        return guardians;
+    }
+
+    public GuardianDto findGuardianById(Long id){
+        Guardian guardian = guardianRepository.findById(id).
+        orElseThrow(() -> new RuntimeException("Guardian not Found"));
+        GuardianDto response = new GuardianDto(
+            guardian.getId(), 
+            guardian.getName(), 
+            guardian.getPhone(), 
+            guardian.getAddress());
+            return response;
+    }
+
+    public GuardianDto createNewGuardian(GuardianDto guardianDto){
+        Guardian data = new Guardian(
+            guardianDto.id(), 
+            guardianDto.name(), 
+            guardianDto.phone(),
+            guardianDto.address());
+        this.guardianRepository.save(data);
+        Guardian guardian = this.guardianRepository.findById(data.getId()).
+        orElseThrow(() -> new RuntimeException("Guardian not found"));
         GuardianDto response = new GuardianDto(
             guardian.getId(),
             guardian.getName(),
@@ -26,32 +56,25 @@ public class GuardianService {
         return response;
     }
 
-    public List<Guardian> findGuardians(){
-        return this.guardianRepository.findAll();
-    }
-
-    public Guardian findGuardianById(Long id){
-        return this.guardianRepository.findById(id).
-        orElseThrow(() -> new RuntimeException("Guardian not Found"));
-    }
-
-    public Guardian createNewGuardian(GuardianDto guardianDto){
-        Guardian newGuardian = new Guardian(guardianDto);
-        this.guardianRepository.save(newGuardian);
-        return newGuardian;
-    }
-
-    public Guardian updateGuardian(GuardianDto data, Long id){
-        Guardian guardian = this.findGuardianById(id);
+    public GuardianDto updateGuardian(GuardianDto data, Long id){
+        Guardian guardian = this.guardianRepository.findById(id).
+        orElseThrow(() -> new RuntimeException("Guardian not found"));
         if(!data.name().isEmpty()) guardian.setName(data.name());
         if(!data.address().isEmpty()) guardian.setAddress(data.address());
         if(!data.phone().isEmpty()) guardian.setPhone(data.phone());
         this.guardianRepository.save(guardian);
-        return guardian;
+        GuardianDto response = new GuardianDto(
+            guardian.getId(),
+            guardian.getName(),
+            guardian.getPhone(),
+            guardian.getAddress()
+        );
+        return response;
     }
 
     public void deleteGuardianById(Long id){
-        Guardian guardian = this.findGuardianById(id);
+        Guardian guardian = this.guardianRepository.findById(id).
+        orElseThrow(() -> new RuntimeException("Guardian not found"));
         this.guardianRepository.delete(guardian);
     }
 }

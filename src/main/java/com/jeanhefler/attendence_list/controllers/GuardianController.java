@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jeanhefler.attendence_list.dtos.GuardianDto;
-import com.jeanhefler.attendence_list.entities.Guardian;
 import com.jeanhefler.attendence_list.services.GuardianService;
 
 @RestController
@@ -27,35 +26,31 @@ public class GuardianController {
     
     @GetMapping()
     public ResponseEntity<List<GuardianDto>> getGuardians(){
-        List<GuardianDto> guardianDtos = this.guardianService.findGuardians().stream()
-        .map(guardian -> this.guardianService.toDto(guardian)).toList();
-        return ResponseEntity.ok(guardianDtos);
+        List<GuardianDto> guardians = this.guardianService.findGuardians();
+        return ResponseEntity.ok(guardians);
     }
 
     @GetMapping("/{id}") 
     ResponseEntity<GuardianDto> getGuardianById(@PathVariable Long id){
-        Guardian guardian = this.guardianService.findGuardianById(id);
-        GuardianDto response = this.guardianService.toDto(guardian);
+        GuardianDto response = this.guardianService.findGuardianById(id);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
     ResponseEntity<GuardianDto> insert(@RequestBody GuardianDto guardianDto){
-        Guardian guardian = this.guardianService.createNewGuardian(guardianDto);
-        GuardianDto response = this.guardianService.toDto(guardian);
+        GuardianDto response = this.guardianService.createNewGuardian(guardianDto);
         return ResponseEntity.ok().body(response);
     }
 
     @PutMapping("/{id}")
     ResponseEntity<GuardianDto> updateGuardian(@RequestBody GuardianDto data, @PathVariable Long id){
         this.guardianService.updateGuardian(data, id);
-        Guardian guardian = this.guardianService.findGuardianById(id);
-        GuardianDto response = this.guardianService.toDto(guardian);
+        GuardianDto response = this.guardianService.findGuardianById(id);
         return ResponseEntity.ok().body(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Guardian> deleteGuardian(@PathVariable Long id){
+    public ResponseEntity<GuardianDto> deleteGuardian(@PathVariable Long id){
         this.guardianService.deleteGuardianById(id);
         return ResponseEntity.noContent().build();
     }

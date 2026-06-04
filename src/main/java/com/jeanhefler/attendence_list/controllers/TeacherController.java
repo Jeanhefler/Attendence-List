@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jeanhefler.attendence_list.dtos.TeacherDto;
-import com.jeanhefler.attendence_list.entities.Teacher;
 import com.jeanhefler.attendence_list.services.TeacherService;
 
 @RestController
@@ -27,30 +26,25 @@ public class TeacherController {
 
     @GetMapping
     public ResponseEntity<List<TeacherDto>> getAll(){
-        List<TeacherDto> teacherDtos = this.teacherService.findTeachers()
-        .stream().map(teacher -> this.teacherService.toDto(teacher)).toList();
-        return ResponseEntity.ok().body(teacherDtos);
+        List<TeacherDto> response = this.teacherService.findTeachers();
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TeacherDto> getById(@PathVariable Long id){
-        TeacherDto response = this.teacherService.toDto(this.teacherService.findTeacherById(id));
+        TeacherDto response = this.teacherService.findTeacherById(id);
         return ResponseEntity.ok().body(response);
     }
 
     @PostMapping()
     public ResponseEntity<TeacherDto> insert(@RequestBody TeacherDto data){
-        Teacher teacher = new Teacher(data);
-        this.teacherService.createTeacher(teacher);
-        TeacherDto response = this.teacherService.toDto(teacher);
+        TeacherDto response = this.teacherService.createTeacher(data);
         return ResponseEntity.ok().body(response);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<TeacherDto> update(@PathVariable Long id, @RequestBody TeacherDto data){
-        Teacher teacher = this.teacherService.findTeacherById(id);
-        this.teacherService.updateTeacher(id, teacher);
-        TeacherDto response = this.teacherService.toDto(teacher);
+        TeacherDto response = this.teacherService.updateTeacher(id, data);
         return ResponseEntity.ok().body(response);
     }
 
