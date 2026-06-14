@@ -6,52 +6,38 @@ import org.springframework.stereotype.Service;
 
 import com.jeanhefler.attendence_list.dtos.TeacherDto;
 import com.jeanhefler.attendence_list.entities.Teacher;
+import com.jeanhefler.attendence_list.mappers.TeacherMapper;
 import com.jeanhefler.attendence_list.respositories.TeacherRepository;
 
 @Service
 public class TeacherService {
     private TeacherRepository teacherRepository;
+    private TeacherMapper teacherMapper;
 
-    public TeacherService(TeacherRepository teacherRepository) {
+    public TeacherService(TeacherRepository teacherRepository, TeacherMapper teacherMapper) {
         this.teacherRepository = teacherRepository;
+        this.teacherMapper = teacherMapper;
     }
 
     public List<TeacherDto> findTeachers(){
         List<TeacherDto> response = this.teacherRepository.findAll().stream()
-        .map(teacher -> new TeacherDto(
-            teacher.getId(), 
-            teacher.getName(), 
-            teacher.getPhone(), 
-            teacher.getAddress())).toList();
+        .map(teacher -> teacherMapper.toDto(teacher)).toList();
         return response;
     }
 
     public TeacherDto findTeacherById(Long id){
         Teacher teacher = this.teacherRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Teacher not found"));
-        TeacherDto response = new TeacherDto(
-            teacher.getId(), 
-            teacher.getName(), 
-            teacher.getPhone(),
-            teacher.getAddress());
-            return response;
+        TeacherDto response = teacherMapper.toDto(teacher);
+        return response;
     }
 
     public TeacherDto createTeacher(TeacherDto teacherDto){
-        Teacher data = new Teacher(
-            teacherDto.id(),
-            teacherDto.name(), 
-            teacherDto.phone(), 
-            teacherDto.address());
+        Teacher data = teacherMapper.toEntity(teacherDto);
         this.teacherRepository.save(data);
         Teacher teacher = this.teacherRepository.findById(data.getId()).
         orElseThrow(() -> new RuntimeException("Teacher not found"));
-        TeacherDto response = new TeacherDto(
-            teacher.getId(),
-            teacher.getName(),
-            teacher.getPhone(),
-            teacher.getAddress()
-        );
+        TeacherDto response = teacherMapper.toDto(teacher);
         return response;
     }
 
@@ -62,12 +48,7 @@ public class TeacherService {
         if(!data.address().isEmpty()) teacher.setAddress(data.address());
         if(!data.phone().isEmpty()) teacher.setPhone(data.phone());
         this.teacherRepository.save(teacher);
-        TeacherDto response = new TeacherDto(
-            teacher.getId(),
-            teacher.getName(),
-            teacher.getPhone(),
-            teacher.getAddress()
-        );
+        TeacherDto response = teacherMapper.toDto(teacher);
         return response;
     }
 

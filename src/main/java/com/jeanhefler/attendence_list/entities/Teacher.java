@@ -1,6 +1,5 @@
 package com.jeanhefler.attendence_list.entities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.AttributeOverride;
@@ -20,5 +19,5 @@ public class Teacher extends StakeHolder {
 
 
     @OneToMany(mappedBy = "teacher")
-    private List<ClassRoom> classRooms = new ArrayList<>();
+    private List<ClassRoom> classRooms;
 }
