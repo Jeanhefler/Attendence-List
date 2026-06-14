@@ -1,6 +1,4 @@
 package com.jeanhefler.attendence_list.entities;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.AttributeOverride;
@@ -20,5 +18,5 @@ public class Guardian extends StakeHolder{
     }
 
     @OneToMany(mappedBy = "guardian")
-    private List<Student> students = new ArrayList<>();
+    private List<Student> students;
 }
