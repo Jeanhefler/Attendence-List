@@ -1,7 +1,6 @@
 package com.jeanhefler.attendence_list.entities;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -22,16 +21,16 @@ public class AttendanceList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "attendancelist_id")
     private Long id;
-    private LocalDate Attendancedate;
+    private LocalDate AttendanceDate;
 
     @ManyToOne
     @JoinColumn(name = "classroom_id")
     private ClassRoom classRoom;
 
     @OneToMany(mappedBy = "attendanceList",
-               cascade = CascadeType.ALL,
-               orphanRemoval = true)
-    private List<Attendence> records = new ArrayList<>();
+        cascade = CascadeType.ALL,
+        orphanRemoval = true)
+    private List<Attendance> records;
 
     public Long getId() {
         return id;
@@ -46,15 +45,15 @@ public class AttendanceList {
         this.classRoom = classRoom;
     }
     public LocalDate getAttendanceDate() {
-        return Attendancedate;
+        return AttendanceDate;
     }
-    public void setAttendaceDate(LocalDate date) {
-        this.Attendancedate = date;
+    public void setAttendanceDate(LocalDate date) {
+        this.AttendanceDate = date;
     }
-    public List<Attendence> getRecords() {
+    public List<Attendance> getRecords() {
         return records;
     }
-    public void setRecords(List<Attendence> records) {
+    public void setRecords(List<Attendance> records) {
         this.records = records;
     }
     

@@ -31,7 +31,7 @@ public class Student {
     private ClassRoom classRoom;
 
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
-    private List<Attendence> attendence;
+    private List<Attendance> attendence;
     public Student() {
     }
 

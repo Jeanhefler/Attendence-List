@@ -29,7 +29,7 @@ public class GuardianService {
         Guardian guardian = guardianRepository.findById(id).
         orElseThrow(() -> new RuntimeException("Guardian not Found"));
         GuardianDto response = guardianMapper.toDto(guardian);
-            return response;
+        return response;
     }
 
     public GuardianDto createNewGuardian(GuardianDto guardianDto){
