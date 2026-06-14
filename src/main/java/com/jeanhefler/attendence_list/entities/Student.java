@@ -1,16 +1,15 @@
 package com.jeanhefler.attendence_list.entities;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,16 +22,26 @@ public class Student {
     private String name;
     private boolean isEnrolled;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "guardian_id")
     private Guardian guardian;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "classroom_id")
     private ClassRoom classRoom;
 
-    @OneToOne(mappedBy = "student")
-    private List<Attendence> attendence = new ArrayList<>();
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+    private List<Attendence> attendence;
+    public Student() {
+    }
+
+    public Student(Long id, String name, boolean isEnrolled, Guardian guardian, ClassRoom classRoom) {
+        this.id = id;
+        this.name = name;
+        this.isEnrolled = isEnrolled;
+        this.guardian = guardian;
+        this.classRoom = classRoom;
+    }
 
     public Long getId() {
         return id;

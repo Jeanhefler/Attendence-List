@@ -14,7 +14,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "classRooms")
+@Table(name = "classrooms")
 public class ClassRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +30,15 @@ public class ClassRoom {
     private List<Student> students = new ArrayList<>();
 
     @OneToMany(mappedBy = "classRoom")
-    private List<AttendenceList> attendenceLists = new ArrayList<>();
+    private List<AttendanceList> attendanceLists = new ArrayList<>();
+
+    public ClassRoom(){}
+
+    public ClassRoom(Long id, String name, Teacher teacher) {
+        this.id = id;
+        this.name = name;
+        this.teacher = teacher;
+    }
 
     public Long getId() {
         return id;
