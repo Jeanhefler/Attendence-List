@@ -1,6 +1,5 @@
 package com.jeanhefler.attendence_list.entities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -27,10 +26,7 @@ public class ClassRoom {
     private Teacher teacher;
 
     @OneToMany(mappedBy = "classRoom")
-    private List<Student> students = new ArrayList<>();
-
-    @OneToMany(mappedBy = "classRoom")
-    private List<AttendanceList> attendanceLists = new ArrayList<>();
+    private List<AttendanceList> attendanceLists;
 
     public ClassRoom(){}
 
@@ -63,14 +59,5 @@ public class ClassRoom {
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
-    
 
 }
