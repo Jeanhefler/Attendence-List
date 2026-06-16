@@ -53,7 +53,7 @@ public class StudentService {
     }
 
     /*is not good convert dto -> toEntity -> toDto,
-    fix it using a method to return direct entity*/
+    fix it using a method that return direct entity*/
     public StudentDto updateStudent(Long id, StudentDto dto){
         Student student = this.studentRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Student not found"));
