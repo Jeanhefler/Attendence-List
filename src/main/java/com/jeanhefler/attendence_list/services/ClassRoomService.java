@@ -46,7 +46,8 @@ public class ClassRoomService {
         ClassRoomDto response = this.classRoomMapper.toDto(newClassRoom);
         return response;
     }
-
+    /*is not good convert dto -> toEntity -> toDto,
+    fix it using a method to return direct entity*/
     public ClassRoomDto updateClassRoom(Long id, ClassRoomDto dto){
         ClassRoom classRoom = this.classRoomRepository.findById(id).
         orElseThrow(() -> new RuntimeException("Classroom not found"));

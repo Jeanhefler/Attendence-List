@@ -32,17 +32,15 @@ public class StudentService {
     }
 
     public List<StudentDto> findStudents(){
-        List<StudentDto> students = this.studentRepository.findAll()
+        return this.studentRepository.findAll()
         .stream().map(student -> studentMapper.toDto(student)
         ).toList();
-        return students;
     }
 
     public StudentDto findStudentById(Long id){
         Student data = this.studentRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Student not found"));
-        StudentDto response = studentMapper.toDto(data);
-        return response;
+        return studentMapper.toDto(data);
     }
 
     public StudentDto insertNewStudent(StudentDto dto){
@@ -54,17 +52,19 @@ public class StudentService {
         return response;
     }
 
+    /*is not good convert dto -> toEntity -> toDto,
+    fix it using a method to return direct entity*/
     public StudentDto updateStudent(Long id, StudentDto dto){
-        Student student = this.studentMapper.toEntity(dto);
+        Student student = this.studentRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Student not found"));
+        student.setEnrolled(dto.isEnrolled());
         if(!dto.name().isEmpty()) student.setName(dto.name());
-        if(dto.isEnrolled() != student.isEnrolled()) student.setEnrolled(dto.isEnrolled());
         if(dto.guardianId() != null) student.setGuardian(this.guardianMapper.
             toEntity(this.guardianService.findGuardianById(dto.guardianId())));
         if(dto.classroomId() != null) student.setClassRoom(this.classRoomMapper.
             toEntity(this.classRoomService.findClassRoomById(dto.classroomId())));
-        StudentDto response = this.studentMapper.toDto(this.studentRepository.findById(student.getId())
-        .orElseThrow(() -> new RuntimeException("Student not found")));
-        return response;
+        this.studentRepository.save(student);
+        return this.studentMapper.toDto(student);
     }
 
     public void deleteStudent(Long id){

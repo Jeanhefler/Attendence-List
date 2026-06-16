@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.jeanhefler.attendence_list.entities.AttendanceList;
 
 @Repository
-public interface AttendenceListRepository extends JpaRepository<AttendanceList, Long>{
+public interface AttendanceListRepository extends JpaRepository<AttendanceList, Long>{
 
 }

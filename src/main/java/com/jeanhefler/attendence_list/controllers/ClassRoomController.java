@@ -3,6 +3,7 @@ package com.jeanhefler.attendence_list.controllers;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,5 +45,12 @@ public class ClassRoomController {
     public ResponseEntity<ClassRoomDto> update(@PathVariable Long id, @RequestBody ClassRoomDto dto){
         ClassRoomDto response = this.classRoomService.updateClassRoom(id, dto);
         return ResponseEntity.ok().body(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ClassRoomDto> delete(@PathVariable Long id){
+        ClassRoomDto classRoom = this.classRoomService.findClassRoomById(id);
+        this.classRoomService.deleteClassRoom(classRoom.id());
+        return ResponseEntity.noContent().build();
     }
 }
