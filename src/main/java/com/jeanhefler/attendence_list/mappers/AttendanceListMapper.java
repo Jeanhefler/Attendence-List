@@ -14,11 +14,9 @@ import com.jeanhefler.attendence_list.entities.ClassRoom;
 public interface AttendanceListMapper {
 
     @Mapping(source = "classRoom.id", target = "classRoomId")
-    @Mapping(source = "records", target = "attendances")
     AttendanceListDto toDto(AttendanceList entity);
 
     @Mapping(source = "classRoomId", target = "classRoom.")
-    @Mapping(source = "attendances", target = "records")
     @Mapping(source = "attendanceDate", target = "attendanceDate")
 
     AttendanceList toEntity(AttendanceListDto attendanceListDto);

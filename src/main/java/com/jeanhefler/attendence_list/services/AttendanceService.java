@@ -18,7 +18,6 @@ public class AttendanceService {
     private StudentService studentService;
     private StudentMapper studentMapper;
     private AttendanceListService attendanceListService;
-    private AttendanceListMapper attendanceListMapper;
 
     public AttendanceService(AttendanceRepository attendanceRepository, AttendanceMapper attendanceMapper,
             StudentService studentService, StudentMapper studentMapper, AttendanceListService attendanceListService,
@@ -28,7 +27,6 @@ public class AttendanceService {
         this.studentService = studentService;
         this.studentMapper = studentMapper;
         this.attendanceListService = attendanceListService;
-        this.attendanceListMapper = attendanceListMapper;
     }
 
     public List<AttendanceDto>findAllAttendances(){
@@ -51,11 +49,10 @@ public class AttendanceService {
         Attendance attendance = this.attendanceRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Attendance Not found"));
         attendance.setAttending(request.attending());
-        if(request.studentId() != attendance.getId()) attendance.setStudent(
+        if(request.studentId() != attendance.getStudent().getId()) attendance.setStudent(
             this.studentMapper.toEntity(this.studentService.findStudentById(request.studentId())));
         if(request.attendanceListId() != null) attendance.setAttendanceList(
-            this.attendanceListMapper.toEntity(
-            this.attendanceListService.findAttendanceListById(request.id())));
+            this.attendanceListService.findEntityById(request.id()));
         return this.attendanceMapper.toDto(attendance);
         
     }

@@ -73,4 +73,8 @@ public class StudentService {
         this.studentRepository.delete(student);
     }
 
+    public List<Student> findStudentsByClassRoom(Long classRoomId){
+        return this.studentRepository.findByClassRoomId(classRoomId);
+    }
+
 }
