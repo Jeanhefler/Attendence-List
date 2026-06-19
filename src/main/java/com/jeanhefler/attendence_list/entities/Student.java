@@ -23,10 +23,6 @@ public class Student {
     private boolean isEnrolled;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "guardian_id")
-    private Guardian guardian;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "classroom_id")
     private ClassRoom classRoom;
 
@@ -35,11 +31,10 @@ public class Student {
     public Student() {
     }
 
-    public Student(Long id, String name, boolean isEnrolled, Guardian guardian, ClassRoom classRoom) {
+    public Student(Long id, String name, boolean isEnrolled, ClassRoom classRoom) {
         this.id = id;
         this.name = name;
         this.isEnrolled = isEnrolled;
-        this.guardian = guardian;
         this.classRoom = classRoom;
     }
 
@@ -65,14 +60,6 @@ public class Student {
 
     public void setEnrolled(boolean isEnrolled) {
         this.isEnrolled = isEnrolled;
-    }
-
-    public Guardian getGuardian() {
-        return guardian;
-    }
-
-    public void setGuardian(Guardian responsible) {
-        this.guardian = responsible;
     }
 
     public ClassRoom getClassRoom() {

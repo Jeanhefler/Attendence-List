@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.jeanhefler.attendence_list.dtos.StudentDto;
 import com.jeanhefler.attendence_list.entities.Student;
-import com.jeanhefler.attendence_list.mappers.ClassRoomMapper;
-import com.jeanhefler.attendence_list.mappers.GuardianMapper;
 import com.jeanhefler.attendence_list.mappers.StudentMapper;
 import com.jeanhefler.attendence_list.respositories.StudentRepository;
 
@@ -15,20 +13,13 @@ import com.jeanhefler.attendence_list.respositories.StudentRepository;
 public class StudentService {
     private StudentRepository studentRepository;
     private StudentMapper studentMapper;
-    private GuardianService guardianService;
-    private GuardianMapper guardianMapper;
     private ClassRoomService classRoomService;
-    private ClassRoomMapper classRoomMapper;
 
     public StudentService(StudentRepository studentRepository, StudentMapper studentMapper,
-            GuardianService guardianService, GuardianMapper guardianMapper, ClassRoomService classRoomService,
-            ClassRoomMapper classRoomMapper) {
+        ClassRoomService classRoomService) {
         this.studentRepository = studentRepository;
         this.studentMapper = studentMapper;
-        this.guardianService = guardianService;
-        this.guardianMapper = guardianMapper;
         this.classRoomService = classRoomService;
-        this.classRoomMapper = classRoomMapper;
     }
 
     public List<StudentDto> findStudents(){
@@ -52,17 +43,13 @@ public class StudentService {
         return response;
     }
 
-    /*is not good convert dto -> toEntity -> toDto,
-    fix it using a method that return direct entity*/
     public StudentDto updateStudent(Long id, StudentDto dto){
         Student student = this.studentRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Student not found"));
         student.setEnrolled(dto.isEnrolled());
         if(!dto.name().isEmpty()) student.setName(dto.name());
-        if(dto.guardianId() != null) student.setGuardian(this.guardianMapper.
-            toEntity(this.guardianService.findGuardianById(dto.guardianId())));
-        if(dto.classroomId() != null) student.setClassRoom(this.classRoomMapper.
-            toEntity(this.classRoomService.findClassRoomById(dto.classroomId())));
+        if(dto.classroomId() != null) student.setClassRoom(
+        this.classRoomService.findEntityById(dto.classroomId()));
         this.studentRepository.save(student);
         return this.studentMapper.toDto(student);
     }

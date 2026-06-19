@@ -58,4 +58,9 @@ public class TeacherService {
         this.teacherRepository.delete(teacher);
     }
 
+    public Teacher findEntityById(Long id){
+        return this.teacherRepository.findById(id).
+        orElseThrow(() -> new RuntimeException("Teacher not found"));
+    }
+
 }

@@ -9,12 +9,10 @@ import com.jeanhefler.attendence_list.entities.Attendance;
 @Mapper(componentModel = "spring")
 public interface AttendanceMapper {
     @Mapping(source = "student.id", target = "studentId")
-    @Mapping(source = "attendanceList.id", target = "attendanceListId")
     @Mapping(source = "attending", target = "attending")
     AttendanceDto toDto(Attendance entity);
 
     @Mapping(source = "studentId", target = "student.id")
-    @Mapping(source = "attendanceListId", target = "attendanceList.id")
     @Mapping(source = "attending", target = "attending")
     Attendance toEntity(AttendanceDto dto);
 }

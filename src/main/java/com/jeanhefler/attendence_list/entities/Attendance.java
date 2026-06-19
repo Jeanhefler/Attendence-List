@@ -23,10 +23,6 @@ public class Attendance {
     private Student student;
     private boolean isAttending;
 
-    @ManyToOne
-    @JoinColumn(name = "attendancelist_id")
-    private AttendanceList attendanceList;
-
     public Long getId() {
         return id;
     }
@@ -50,14 +46,5 @@ public class Attendance {
     public void setAttending(boolean isAttending) {
         this.isAttending = isAttending;
     }
-
-    public AttendanceList getAttendanceList() {
-        return attendanceList;
-    }
-
-    public void setAttendanceList(AttendanceList attendanceList) {
-        this.attendanceList = attendanceList;
-    }
-
     
 }
