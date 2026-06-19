@@ -21,6 +21,11 @@ public class Attendance {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")
     private Student student;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "attendancelist_id")
+    private AttendanceList attendanceList;
+
     private boolean isAttending;
 
     public Long getId() {
@@ -37,6 +42,14 @@ public class Attendance {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public AttendanceList getAttendanceList() {
+        return attendanceList;
+    }
+
+    public void setAttendanceList(AttendanceList attendanceList) {
+        this.attendanceList = attendanceList;
     }
 
     public boolean isAttending() {
