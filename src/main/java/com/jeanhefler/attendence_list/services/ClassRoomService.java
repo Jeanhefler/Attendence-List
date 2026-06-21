@@ -23,9 +23,8 @@ public class ClassRoomService {
     }
 
     public List<ClassRoomDto> findAllClassRooms(){
-        List<ClassRoomDto> classRooms = classRoomRepository.findAll().stream()
-        .map(classRoom -> classRoomMapper.toDto(classRoom)).toList();
-        return classRooms;
+        return classRoomRepository.findAll().stream()
+        .map(classRoomMapper::toDto).toList();
     }
 
     public ClassRoomDto findClassRoomById(Long id){

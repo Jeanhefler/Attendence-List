@@ -20,9 +20,8 @@ public class TeacherService {
     }
 
     public List<TeacherDto> findTeachers(){
-        List<TeacherDto> response = this.teacherRepository.findAll().stream()
-        .map(teacher -> teacherMapper.toDto(teacher)).toList();
-        return response;
+        return this.teacherRepository.findAll().stream()
+        .map(teacherMapper::toDto).toList();
     }
 
     public TeacherDto findTeacherById(Long id){

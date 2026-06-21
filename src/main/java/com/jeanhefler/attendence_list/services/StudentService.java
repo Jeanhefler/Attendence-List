@@ -24,8 +24,7 @@ public class StudentService {
 
     public List<StudentDto> findStudents(){
         return this.studentRepository.findAll()
-        .stream().map(student -> studentMapper.toDto(student)
-        ).toList();
+        .stream().map(this.studentMapper::toDto).toList();
     }
 
     public StudentDto findStudentById(Long id){
@@ -60,8 +59,10 @@ public class StudentService {
         this.studentRepository.delete(student);
     }
 
-    public List<Student> findStudentsByClassRoom(Long classRoomId){
-        return this.studentRepository.findByClassRoomId(classRoomId);
+    public List<StudentDto> findStudentsByClassRoom(Long classRoomId) {
+        return this.studentRepository.findByClassRoomId(classRoomId)
+            .stream()
+            .map(this.studentMapper::toDto).toList();
     }
 
 }
